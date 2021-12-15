@@ -1,0 +1,16 @@
+
+
+Octet stream for downloading files
+-> https://stackoverflow.com/questions/20508788/do-i-need-content-type-application-octet-stream-for-file-download
+
+
+
+
+file server via webserver
+1.redo in nodejs
+2.view, navigation inside and outside, upload, download
+3.parametered argument as root path, username, password, --defaultAdmin
+4.multiple files upload
+5.convert npm module
+6.web-file-server
+7. 
