@@ -115,7 +115,7 @@
     }
   });
 });
-;define("ember-path/controllers/getfiles", ["exports", "@ember/controller"], function (_exports, _controller) {
+;define("ember-path/controllers/getfilesall/file", ["exports", "@ember/controller", "@ember/object", "@glimmer/tracking"], function (_exports, _controller, _object, _tracking) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -123,9 +123,105 @@
   });
   _exports.default = void 0;
 
-  class GetfilesController extends _controller.default {}
+  var _class, _descriptor;
 
-  _exports.default = GetfilesController;
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let GetfilesallFileController = (_class = class GetfilesallFileController extends _controller.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "filepathtitle", _descriptor, this);
+
+      function getURL() {
+        var prevPathArr = window.location.pathname.split('/');
+        console.log('prevpatharr : ', prevPathArr);
+        var prevPath = prevPathArr.splice(2, prevPathArr.length).join('/');
+        console.log('prevpath : ', prevPath);
+        return prevPath;
+      }
+
+      $(window).on('popstate', function (e) {
+        this.filepathtitle = getURL();
+      });
+      this.filepathtitle = getURL();
+      console.log('upload js constructor filepath : ', this.filepathtitle);
+    }
+
+    save_filepath(filePathName) {
+      console.log('before save : ', this.filepathtitle);
+      this.filepathtitle = filePathName;
+      console.log('after save : ', this.filepathtitle);
+      console.log('upload js action filepath : ', this.filepathtitle);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "filepathtitle", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "save_filepath", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "save_filepath"), _class.prototype)), _class);
+  _exports.default = GetfilesallFileController;
+});
+;define("ember-path/controllers/getfilesall/files", ["exports", "@ember/controller", "@ember/object", "@glimmer/tracking"], function (_exports, _controller, _object, _tracking) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _class, _descriptor;
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let GetfilesallFilesController = (_class = class GetfilesallFilesController extends _controller.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "filepathtitle", _descriptor, this);
+
+      function getURL() {
+        var prevPathArr = window.location.pathname.split('/');
+        console.log('prevpatharr : ', prevPathArr);
+        var prevPath = prevPathArr.splice(2, prevPathArr.length).join('/');
+        console.log('prevpath : ', prevPath);
+        return prevPath;
+      }
+
+      this.filepathtitle = getURL();
+      $(window).on('popstate', function (e) {
+        this.filepathtitle = getURL();
+      });
+      console.log('upload js constructor filepath : ', this.filepathtitle);
+    }
+
+    save_filepath(filePathName) {
+      console.log('before save : ', this.filepathtitle);
+      this.filepathtitle = filePathName;
+      console.log('after save : ', this.filepathtitle);
+      console.log('upload js action filepath : ', this.filepathtitle);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "filepathtitle", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "save_filepath", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "save_filepath"), _class.prototype)), _class);
+  _exports.default = GetfilesallFilesController;
 });
 ;define("ember-path/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
   "use strict";
@@ -351,6 +447,25 @@
   };
   _exports.default = _default;
 });
+;define("ember-path/initializers/link-action-enhancer", ["exports", "ember-link-action/initializers/link-action-enhancer"], function (_exports, _linkActionEnhancer) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _linkActionEnhancer.default;
+    }
+  });
+  Object.defineProperty(_exports, "initialize", {
+    enumerable: true,
+    get: function () {
+      return _linkActionEnhancer.initialize;
+    }
+  });
+});
 ;define("ember-path/instance-initializers/ember-data", ["exports"], function (_exports) {
   "use strict";
 
@@ -421,7 +536,7 @@
   });
   _exports.default = void 0;
 
-  var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+  var _class, _descriptor, _descriptor2, _descriptor3;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -440,13 +555,10 @@
       _initializerDefineProperty(this, "session", _descriptor2, this);
 
       _initializerDefineProperty(this, "files", _descriptor3, this);
-
-      _initializerDefineProperty(this, "filepath", _descriptor4, this);
     }
 
     model(params) {
-      console.log('params : ', params);
-      localStorage.setItem('filepath', params.path);
+      console.log('params : ', params); // localStorage.setItem('filepath', params.path);
 
       if (params.path == undefined || params.path == '') {
         this.files = fetch('http://localhost:8081/getfiles/').then(response => response.json()).then(data => {
@@ -464,11 +576,6 @@
       return this.files;
     }
 
-    setupController(controller, model) {
-      super.setupController(controller, model);
-      this.controllerFor('application').set('filepathcon', localStorage.getItem('filepath'));
-    }
-
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "router", [_service.inject], {
     configurable: true,
     enumerable: true,
@@ -484,11 +591,6 @@
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "filepath", [_tracking.tracked], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
   })), _class);
   _exports.default = GetfilesallFileRoute;
 });
@@ -500,7 +602,7 @@
   });
   _exports.default = void 0;
 
-  var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+  var _class, _descriptor, _descriptor2, _descriptor3;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -519,13 +621,10 @@
       _initializerDefineProperty(this, "session", _descriptor2, this);
 
       _initializerDefineProperty(this, "files", _descriptor3, this);
-
-      _initializerDefineProperty(this, "filepath", _descriptor4, this);
     }
 
     model(params) {
-      console.log('params : ', params);
-      localStorage.setItem('filepath', params.path);
+      console.log('params : ', params); // localStorage.setItem('filepath', params.path);
 
       if (params.path == undefined || params.path == '') {
         this.files = fetch('http://localhost:8081/getfiles/').then(response => response.json()).then(data => {
@@ -543,11 +642,6 @@
       return this.files;
     }
 
-    setupController(controller, model) {
-      super.setupController(controller, model);
-      this.controllerFor('application').set('filepathcon', localStorage.getItem('filepath'));
-    }
-
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "router", [_service.inject], {
     configurable: true,
     enumerable: true,
@@ -559,11 +653,6 @@
     writable: true,
     initializer: null
   }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "files", [_tracking.tracked], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "filepath", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -733,8 +822,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "3neH/2k4",
-    "block": "[[[1,[28,[35,0],[\"File\"],null]],[1,\"\\n\"],[46,[28,[37,2],null,null],null,null,null],[10,\"table\"],[14,5,\"border: 1px solid; margin-left: 100px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[36,5]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,7],null,[[\"@route\",\"@model\"],[\"getfilesall.files\",[30,2,[\"filePath\"]]]],[[\"default\"],[[[[1,[30,2,[\"fname\"]]]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"http://localhost:8081/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[1,[30,2,[\"fname\"]]],[13],[13],[1,\"\\n\"]],[]]],[1,\"        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"http://localhost:8081/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,8]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"component\",\"-outlet\",\"each\",\"-track-array\",\"file-id\",\"if\",\"link-to\",\"filepathvar\"]]",
+    "id": "r6Sfil5F",
+    "block": "[[[1,[28,[35,0],[\"File\"],null]],[1,\"\\n\"],[46,[28,[37,2],null,null],null,null,null],[10,\"table\"],[14,5,\"border: 1px solid; margin-left: 100px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[36,5]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,7],null,[[\"@route\",\"@model\",\"@invokeAction\"],[\"getfilesall.files\",[30,2,[\"filePath\"]],[28,[37,8],[[30,0,[\"save_filepath\"]],[30,2,[\"filePath\"]]],null]]],[[\"default\"],[[[[1,\"/\"],[1,[30,2,[\"fname\"]]]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"http://localhost:8081/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[1,[30,2,[\"fname\"]]],[13],[13],[1,\"\\n\"]],[]]],[1,\"        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"http://localhost:8081/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[30,0,[\"filepathtitle\"]]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"component\",\"-outlet\",\"each\",\"-track-array\",\"file-id\",\"if\",\"link-to\",\"fn\"]]",
     "moduleName": "ember-path/templates/getfilesall/file.hbs",
     "isStrictMode": false
   });
@@ -750,8 +839,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "aCum3PXw",
-    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\"],[10,\"table\"],[14,5,\"border: 1px solid; margin-left: 100px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[36,3]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,5],null,[[\"@route\",\"@model\"],[\"getfilesall.files\",[29,[[30,2,[\"filePath\"]]]]]],[[\"default\"],[[[[1,[30,2,[\"fname\"]]]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"http://localhost:8081/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[1,[30,2,[\"fname\"]]],[13],[13],[1,\"\\n\"]],[]]],[1,\"        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"http://localhost:8081/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,6]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"@model\",\"file\"],false,[\"page-title\",\"each\",\"-track-array\",\"file-id\",\"if\",\"link-to\",\"filepathvar\"]]",
+    "id": "YUSMKkNo",
+    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\"],[10,\"table\"],[14,5,\"border: 1px solid; margin-left: 100px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[36,3]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,5],null,[[\"@route\",\"@model\",\"@invokeAction\"],[\"getfilesall.files\",[29,[[30,2,[\"filePath\"]]]],[28,[37,6],[[30,0,[\"save_filepath\"]],[30,2,[\"filePath\"]]],null]]],[[\"default\"],[[[[1,\"/\"],[1,[30,2,[\"fname\"]]]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"http://localhost:8081/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[1,[30,2,[\"fname\"]]],[13],[13],[1,\"\\n\"]],[]]],[1,\"        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"http://localhost:8081/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,7]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"@model\",\"file\"],false,[\"page-title\",\"each\",\"-track-array\",\"file-id\",\"if\",\"link-to\",\"fn\",\"filepathtitle\"]]",
     "moduleName": "ember-path/templates/getfilesall/files.hbs",
     "isStrictMode": false
   });
@@ -833,7 +922,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("ember-path/app")["default"].create({"name":"ember-path","version":"0.0.0+af98d25a"});
+            require("ember-path/app")["default"].create({"name":"ember-path","version":"0.0.0+41c05cfd"});
           }
         
 //# sourceMappingURL=ember-path.map

@@ -2,6 +2,7 @@ const express = require('express');
 const uploadjs = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 const fsx = require('fs-extra');
 var multer = require('multer');
 
@@ -32,10 +33,18 @@ uploadjs.post('/', upload.any(), (req, res) => {
     console.log(files);
     console.log('relpath in upload : ', relpath);
     if (relpath != '' && relpath != undefined) {
-        files.forEach((val, ind) => {
-            fsx.move(path.resolve(__dirname, '../uploads')+'/'+val, path.resolve(__dirname, '../uploads')+'/'+relpath+'/'+val, (error) => {
-                if(error)   console.log('error : ', error);
-                console.log("move success");
+
+        fs.access(path.resolve(__dirname, relpath), (error) => {
+            if (error) {
+                console.log("Directory Does not exist");
+            } else {
+                console.log("Directory Exists");
+            }
+            files.forEach((val, ind) => {
+                fsx.move(path.resolve(__dirname, '../uploads')+'/'+val, path.resolve(__dirname, '../uploads')+'/'+relpath+'/'+val, (error) => {
+                    if(error)   console.log('error : ', error);
+                    console.log("move success");
+                });
             });
         });
     }

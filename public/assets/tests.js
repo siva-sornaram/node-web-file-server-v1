@@ -67,14 +67,26 @@ define("ember-path/tests/test-helper", ["ember-path/app", "ember-path/config/env
   (0, _qunitDom.setup)(QUnit.assert);
   (0, _emberQunit.start)();
 });
-define("ember-path/tests/unit/controllers/getfiles-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+define("ember-path/tests/unit/controllers/getfilesall/file-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
   "use strict";
 
-  (0, _qunit.module)('Unit | Controller | getfiles', function (hooks) {
+  (0, _qunit.module)('Unit | Controller | getfilesall/file', function (hooks) {
     (0, _emberQunit.setupTest)(hooks); // TODO: Replace this with your real tests.
 
     (0, _qunit.test)('it exists', function (assert) {
-      let controller = this.owner.lookup('controller:getfiles');
+      let controller = this.owner.lookup('controller:getfilesall/file');
+      assert.ok(controller);
+    });
+  });
+});
+define("ember-path/tests/unit/controllers/getfilesall/files-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+  "use strict";
+
+  (0, _qunit.module)('Unit | Controller | getfilesall/files', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks); // TODO: Replace this with your real tests.
+
+    (0, _qunit.test)('it exists', function (assert) {
+      let controller = this.owner.lookup('controller:getfilesall/files');
       assert.ok(controller);
     });
   });
