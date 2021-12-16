@@ -215,12 +215,16 @@
       console.log('upload js action filepath : ', this.filepathtitle);
     }
 
+    go_back() {
+      window.history.back();
+    }
+
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "filepathtitle", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class.prototype, "save_filepath", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "save_filepath"), _class.prototype)), _class);
+  }), _applyDecoratedDescriptor(_class.prototype, "save_filepath", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "save_filepath"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "go_back", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "go_back"), _class.prototype)), _class);
   _exports.default = GetfilesallFilesController;
 });
 ;define("ember-path/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
@@ -320,6 +324,33 @@
   });
   _exports.default = void 0;
   var _default = _singularize.default;
+  _exports.default = _default;
+});
+;define("ember-path/helpers/sizer", ["exports", "@ember/component/helper"], function (_exports, _helper) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = (0, _helper.helper)(function sizer(size
+  /*, named*/
+  ) {
+    // return positional;
+    function formatBytes(bytes) {
+      let decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    return formatBytes(size);
+  });
+
   _exports.default = _default;
 });
 ;define("ember-path/initializers/app-version", ["exports", "ember-cli-app-version/initializer-factory", "ember-path/config/environment"], function (_exports, _initializerFactory, _environment) {
@@ -516,6 +547,22 @@
     });
   });
 });
+;define("ember-path/routes/application", ["exports", "@ember/routing/route"], function (_exports, _route) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  class ApplicationIndexRoute extends _route.default {
+    beforeModel() {// this.transitionTo('getfilesall');
+    }
+
+  }
+
+  _exports.default = ApplicationIndexRoute;
+});
 ;define("ember-path/routes/getfilesall", ["exports", "@ember/routing/route"], function (_exports, _route) {
   "use strict";
 
@@ -561,12 +608,12 @@
       console.log('params : ', params); // localStorage.setItem('filepath', params.path);
 
       if (params.path == undefined || params.path == '') {
-        this.files = fetch('http://localhost:8081/getfiles/').then(response => response.json()).then(data => {
+        this.files = fetch('/getfiles/').then(response => response.json()).then(data => {
           console.log(data);
           return data;
         });
       } else {
-        this.files = fetch('http://localhost:8081/getfiles/' + params.path).then(response => response.json()).then(data => {
+        this.files = fetch('/getfiles/' + params.path).then(response => response.json()).then(data => {
           console.log(data);
           return data;
         });
@@ -627,12 +674,12 @@
       console.log('params : ', params); // localStorage.setItem('filepath', params.path);
 
       if (params.path == undefined || params.path == '') {
-        this.files = fetch('http://localhost:8081/getfiles/').then(response => response.json()).then(data => {
+        this.files = fetch('/getfiles/').then(response => response.json()).then(data => {
           console.log(data);
           return data;
         });
       } else {
-        this.files = fetch('http://localhost:8081/getfiles/' + params.path).then(response => response.json()).then(data => {
+        this.files = fetch('/getfiles/' + params.path).then(response => response.json()).then(data => {
           console.log(data);
           return data;
         });
@@ -788,8 +835,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "qNYKGLVp",
-    "block": "[[[1,[28,[35,0],[\"EmberPath\"],null]],[1,\"\\n\\n\"],[10,0],[12],[10,\"strong\"],[12],[1,\" Web File Server\"],[13],[13],[1,\"\\n\"],[8,[39,1],null,[[\"@route\"],[\"getfilesall\"]],[[\"default\"],[[[[1,\"Folders and Files\"]],[]]]]],[1,\"\\n\\n\"],[46,[28,[37,3],null,null],null,null,null]],[],false,[\"page-title\",\"link-to\",\"component\",\"-outlet\"]]",
+    "id": "iEEegk9P",
+    "block": "[[[1,[28,[35,0],[\"Application\"],null]],[1,\"\\n\\n\"],[8,[39,1],null,[[\"@route\"],[\"getfilesall.file\"]],[[\"default\"],[[[[10,\"h1\"],[12],[1,\"Index of /Files\"],[13]],[]]]]],[1,\"\\n\\n\"],[46,[28,[37,3],null,null],null,null,null]],[],false,[\"page-title\",\"link-to\",\"component\",\"-outlet\"]]",
     "moduleName": "ember-path/templates/application.hbs",
     "isStrictMode": false
   });
@@ -805,8 +852,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "zF1ZBjI9",
-    "block": "[[[1,[28,[35,0],[\"Getfilesall\"],null]],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Files and Folders\"],[13],[1,\"\\n\\n\"],[46,[28,[37,2],null,null],null,null,null]],[],false,[\"page-title\",\"component\",\"-outlet\"]]",
+    "id": "COVldCRh",
+    "block": "[[[1,[28,[35,0],[\"Getfilesall\"],null]],[1,\"\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n\"],[46,[28,[37,2],null,null],null,null,null],[1,\"\\n\"],[10,\"hr\"],[12],[13]],[],false,[\"page-title\",\"component\",\"-outlet\"]]",
     "moduleName": "ember-path/templates/getfilesall.hbs",
     "isStrictMode": false
   });
@@ -822,8 +869,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "r6Sfil5F",
-    "block": "[[[1,[28,[35,0],[\"File\"],null]],[1,\"\\n\"],[46,[28,[37,2],null,null],null,null,null],[10,\"table\"],[14,5,\"border: 1px solid; margin-left: 100px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[36,5]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,7],null,[[\"@route\",\"@model\",\"@invokeAction\"],[\"getfilesall.files\",[30,2,[\"filePath\"]],[28,[37,8],[[30,0,[\"save_filepath\"]],[30,2,[\"filePath\"]]],null]]],[[\"default\"],[[[[1,\"/\"],[1,[30,2,[\"fname\"]]]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"http://localhost:8081/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[1,[30,2,[\"fname\"]]],[13],[13],[1,\"\\n\"]],[]]],[1,\"        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"http://localhost:8081/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[30,0,[\"filepathtitle\"]]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"component\",\"-outlet\",\"each\",\"-track-array\",\"file-id\",\"if\",\"link-to\",\"fn\"]]",
+    "id": "eMYksJd9",
+    "block": "[[[1,[28,[35,0],[\"File\"],null]],[1,\"\\n\"],[46,[28,[37,2],null,null],null,null,null],[10,\"table\"],[14,5,\"margin-left: 30px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Size\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Last Modified\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[30,2,[\"id\"]]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,6],[[24,0,\"button-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\",\"@invokeAction\"],[\"getfilesall.files\",[30,2,[\"filePath\"]],[28,[37,7],[[30,0,[\"save_filepath\"]],[30,2,[\"filePath\"]]],null]]],[[\"default\"],[[[[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[1,\"/\"],[13]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[13],[13],[13],[1,\"\\n\"]],[]]],[1,\"            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[28,[35,8],[[30,2,[\"size\"]]],null]],[13],[1,\"\\n            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"lmod\"]]],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[30,0,[\"filepathtitle\"]]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"component\",\"-outlet\",\"each\",\"-track-array\",\"if\",\"link-to\",\"fn\",\"sizer\"]]",
     "moduleName": "ember-path/templates/getfilesall/file.hbs",
     "isStrictMode": false
   });
@@ -839,8 +886,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "YUSMKkNo",
-    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\"],[10,\"table\"],[14,5,\"border: 1px solid; margin-left: 100px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[36,3]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,5],null,[[\"@route\",\"@model\",\"@invokeAction\"],[\"getfilesall.files\",[29,[[30,2,[\"filePath\"]]]],[28,[37,6],[[30,0,[\"save_filepath\"]],[30,2,[\"filePath\"]]],null]]],[[\"default\"],[[[[1,\"/\"],[1,[30,2,[\"fname\"]]]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"http://localhost:8081/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[1,[30,2,[\"fname\"]]],[13],[13],[1,\"\\n\"]],[]]],[1,\"        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"http://localhost:8081/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,7]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"@model\",\"file\"],false,[\"page-title\",\"each\",\"-track-array\",\"file-id\",\"if\",\"link-to\",\"fn\",\"filepathtitle\"]]",
+    "id": "gtQfXezJ",
+    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\"],[10,\"table\"],[14,5,\"margin-left: 30px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Size\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Last Modified\"],[13],[1,\"\\n  \"],[13],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n      \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"0\"],[13],[1,\"\\n      \"],[10,\"td\"],[12],[11,\"button\"],[24,0,\"button-link\"],[24,4,\"button\"],[4,[38,1],[\"click\",[33,2]],null],[12],[10,\"img\"],[14,\"src\",\"/assets/images/parentfolder.ico\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,\"Parent Folder\"],[13],[13],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[30,2,[\"id\"]]]]],[12],[1,\"\\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,6],[[24,0,\"button-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\",\"@invokeAction\"],[\"getfilesall.files\",[29,[[30,2,[\"filePath\"]]]],[28,[37,7],[[30,0,[\"save_filepath\"]],[30,2,[\"filePath\"]]],null]]],[[\"default\"],[[[[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[1,\"/\"],[13]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,3],[15,6,[29,[\"/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[13],[13],[13],[1,\"\\n\"]],[]]],[1,\"            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[28,[35,8],[[30,2,[\"size\"]]],null]],[13],[1,\"\\n            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"lmod\"]]],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,9]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"@model\",\"file\"],false,[\"page-title\",\"on\",\"go_back\",\"each\",\"-track-array\",\"if\",\"link-to\",\"fn\",\"sizer\",\"filepathtitle\"]]",
     "moduleName": "ember-path/templates/getfilesall/files.hbs",
     "isStrictMode": false
   });

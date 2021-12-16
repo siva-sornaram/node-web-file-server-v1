@@ -60,6 +60,28 @@ define("ember-path/tests/integration/helpers/filepathvar-test", ["@ember/templat
     });
   });
 });
+define("ember-path/tests/integration/helpers/sizer-test", ["@ember/template-factory", "qunit", "ember-qunit", "@ember/test-helpers"], function (_templateFactory, _qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  (0, _qunit.module)('Integration | Helper | sizer', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks); // TODO: Replace this with your real tests.
+
+    (0, _qunit.test)('it renders', async function (assert) {
+      this.set('inputValue', '1234');
+      await (0, _testHelpers.render)((0, _templateFactory.createTemplateFactory)(
+      /*
+        {{sizer this.inputValue}}
+      */
+      {
+        "id": "GNCXnptW",
+        "block": "[[[1,[28,[35,0],[[30,0,[\"inputValue\"]]],null]]],[],false,[\"sizer\"]]",
+        "moduleName": "(unknown template module)",
+        "isStrictMode": false
+      }));
+      assert.dom(this.element).hasText('1234');
+    });
+  });
+});
 define("ember-path/tests/test-helper", ["ember-path/app", "ember-path/config/environment", "qunit", "@ember/test-helpers", "qunit-dom", "ember-qunit"], function (_app, _environment, QUnit, _testHelpers, _qunitDom, _emberQunit) {
   "use strict";
 
@@ -88,6 +110,17 @@ define("ember-path/tests/unit/controllers/getfilesall/files-test", ["qunit", "em
     (0, _qunit.test)('it exists', function (assert) {
       let controller = this.owner.lookup('controller:getfilesall/files');
       assert.ok(controller);
+    });
+  });
+});
+define("ember-path/tests/unit/routes/application-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+  "use strict";
+
+  (0, _qunit.module)('Unit | Route | application', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks);
+    (0, _qunit.test)('it exists', function (assert) {
+      let route = this.owner.lookup('route:application');
+      assert.ok(route);
     });
   });
 });

@@ -4,9 +4,9 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 const fileOptions = require('../fileoptions');
-const cors = require('cors');
+// const cors = require('cors');
 
-getfiles.use(cors());
+// getfiles.use(cors());
 getfiles.use(bodyParser.json());
 
 var final_files = [];
