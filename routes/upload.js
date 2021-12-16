@@ -6,17 +6,21 @@ const fs = require('fs');
 const fsx = require('fs-extra');
 var multer = require('multer');
 
-const cors = require('cors');
-
-uploadjs.use(cors());
 uploadjs.use(bodyParser.json());
 
 var files = [];
 
+var dir = appRootPath+'/uploads';
+
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+    console.log("Directory Created in ", dir);
+}
+
 var storage = multer.diskStorage({
 
     destination: (req, file, callback) => {
-        callback(null, path.join(__dirname, '../uploads'));
+        callback(null, appRootPath+'/uploads');
     },
     filename : (req, file, callback) => {
         console.log(file);
@@ -35,7 +39,7 @@ uploadjs.post('/', upload.any(), (req, res) => {
     if (relpath != '' && relpath != undefined) {
         console.log('files : ', files);
         files.forEach((val, ind) => {
-            fsx.move(path.resolve(__dirname, '../uploads')+'/'+val, path.resolve(__dirname, '../uploads')+'/'+relpath+'/'+val, (error) => {
+            fsx.move(appRootPath+'/uploads'+'/'+val, appRootPath+'/uploads'+'/'+relpath+'/'+val, (error) => {
                 if(error)   console.log('error : ', error);
                 console.log("move success");
             });

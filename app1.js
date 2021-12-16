@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const { webFileServer } = require('./app');
 
+const cors = require('cors');
+
+app.use(cors());
 global.appRootPath = path.resolve(__dirname);
 
 module.exports.webFileServer = function(port) {
@@ -54,3 +58,5 @@ module.exports.webFileServer = function(port) {
 
     startListening(args.port);
 }
+
+webFileServer(8081);

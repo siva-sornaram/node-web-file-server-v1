@@ -1,17 +1,20 @@
+#!/usr/bin/env node
+
 const express = require('express');
 const app = express();
 const path = require('path');
+const fileOptions = require(path.resolve(__dirname, './fileoptions'));
 
-global.appRootPath = path.resolve(__dirname);
+global.appRootPath = process.cwd();
+console.log('appRootPath : ', appRootPath);
 
-module.exports.webFileServer = function(port) {
-    app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
     //Arguments to be passed to the command line
     function getArgs () {
         const args = {};
         process.argv
-            .slice(3, process.argv.length)
+            .slice(2, process.argv.length)
             .forEach( arg => {
             // long arg
             if (arg.slice(0,2) === '--') {
@@ -33,6 +36,10 @@ module.exports.webFileServer = function(port) {
     const args = getArgs();
     console.log(args);
 
+    if (args.path) {
+        console.log('Entered Path : ', args.path);
+        appRootPath = args.path;
+    }
 
     const getFilesRoute = require('./routes/getfiles');
     app.use('/getfiles', getFilesRoute);
@@ -53,4 +60,3 @@ module.exports.webFileServer = function(port) {
     }
 
     startListening(args.port);
-}
