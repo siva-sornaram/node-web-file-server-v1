@@ -1,6 +1,6 @@
 {
   "name": "@siva_sornaram/web-file-server",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "",
   "main": "app",
   "scripts": {
@@ -10,7 +10,6 @@
   "author": "Siva",
   "license": "ISC",
   "dependencies": {
-    "@siva_sornaram/web-file-server": "^1.3.1",
     "body-parser": "^1.19.1",
     "clui": "^0.3.6",
     "commander": "^8.3.0",
