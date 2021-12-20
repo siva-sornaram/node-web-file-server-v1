@@ -11,7 +11,7 @@ getfiles.use(bodyParser.json());
 
 var final_files = [];
 
-var totalPath = appRootPath+'/uploads';
+var totalPath = appRootPath;
 
 class File {
     constructor(id, fname, isDir, filePath, size, lmod) {
@@ -39,7 +39,7 @@ getfiles.get('/', (req, res) => {
                 console.log('relpath is empty');
                 var files = fs.readdirSync(totalPath);
                 files.forEach((val, ind) => {
-                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), '/'+val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime);
+                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime);
                     final_files.push(fileobj);
                 });
             } else {
@@ -76,7 +76,7 @@ getfiles.get('/*', (req, res) => {
                 console.log('relpath is empty');
                 var files = fs.readdirSync(totalPath);
                 files.forEach((val, ind) => {
-                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), '/'+val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime);
+                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime);
                     final_files.push(fileobj);
                 });
             } else {

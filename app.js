@@ -33,16 +33,19 @@ module.exports.webFileServer = function(port) {
     const args = getArgs();
     console.log(args);
 
-
+    
+    
     const getFilesRoute = require('./routes/getfiles');
     app.use('/getfiles', getFilesRoute);
-
+    
     const uploadFilesRoute = require('./routes/upload');
     app.use('/uploadfiles', uploadFilesRoute);
-
+    
     const downloadFilesRoute = require('./routes/download');
     app.use('/downloadfiles', downloadFilesRoute);
-
+    
+    const createFolderRoute = require('./routes/createfolder');
+    app.use('/createfolder', createFolderRoute);
     //Redirect every other requests to the index.html as it is a single page applicaiton
     app.get('/*', (req, res) => {
         res.sendFile(path.resolve(__dirname, './public/index.html'));

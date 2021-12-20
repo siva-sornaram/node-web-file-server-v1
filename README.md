@@ -24,5 +24,5 @@ servfiles
 #### or
 
 ```bash
-servfiles --port=8081 --path=/Location/To/Your/Path
+servfiles -p 8081 -dir /Location/To/Your/Path
 ```

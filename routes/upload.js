@@ -10,7 +10,7 @@ uploadjs.use(bodyParser.json());
 
 var files = [];
 
-var dir = appRootPath+'/uploads';
+var dir = appRootPath;
 
 if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
@@ -20,7 +20,7 @@ if (!fs.existsSync(dir)) {
 var storage = multer.diskStorage({
 
     destination: (req, file, callback) => {
-        callback(null, appRootPath+'/uploads');
+        callback(null, dir);
     },
     filename : (req, file, callback) => {
         console.log(file);
@@ -39,7 +39,7 @@ uploadjs.post('/', upload.any(), (req, res) => {
     if (relpath != '' && relpath != undefined) {
         console.log('files : ', files);
         files.forEach((val, ind) => {
-            fsx.move(appRootPath+'/uploads'+'/'+val, appRootPath+'/uploads'+'/'+relpath+'/'+val, (error) => {
+            fsx.move(dir+'/'+val, dir+'/'+relpath+'/'+val, (error) => {
                 if(error)   console.log('error : ', error);
                 console.log("move success");
             });

@@ -8,7 +8,7 @@ downloadjs.use(bodyParser.json());
 downloadjs.get('/', (req, res) => {
     var fileName = req.query.filename;
 
-    var downloadpath = appRootPath+'/uploads';
+    var downloadpath = appRootPath;
     res.download(downloadpath+'/'+fileName, (error) => {
         console.log(error);
     });

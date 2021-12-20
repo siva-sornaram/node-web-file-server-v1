@@ -38,21 +38,43 @@ define("ember-path/tests/integration/components/upload-test", ["@ember/template-
     });
   });
 });
-define("ember-path/tests/integration/helpers/filepathvar-test", ["@ember/template-factory", "qunit", "ember-qunit", "@ember/test-helpers"], function (_templateFactory, _qunit, _emberQunit, _testHelpers) {
+define("ember-path/tests/integration/helpers/goback-test", ["@ember/template-factory", "qunit", "ember-qunit", "@ember/test-helpers"], function (_templateFactory, _qunit, _emberQunit, _testHelpers) {
   "use strict";
 
-  (0, _qunit.module)('Integration | Helper | filepathvar', function (hooks) {
+  (0, _qunit.module)('Integration | Helper | goback', function (hooks) {
     (0, _emberQunit.setupRenderingTest)(hooks); // TODO: Replace this with your real tests.
 
     (0, _qunit.test)('it renders', async function (assert) {
       this.set('inputValue', '1234');
       await (0, _testHelpers.render)((0, _templateFactory.createTemplateFactory)(
       /*
-        {{filepathvar this.inputValue}}
+        {{goback this.inputValue}}
       */
       {
-        "id": "alVOH7py",
-        "block": "[[[1,[28,[35,0],[[30,0,[\"inputValue\"]]],null]]],[],false,[\"filepathvar\"]]",
+        "id": "Wz5NhTgu",
+        "block": "[[[1,[28,[35,0],[[30,0,[\"inputValue\"]]],null]]],[],false,[\"goback\"]]",
+        "moduleName": "(unknown template module)",
+        "isStrictMode": false
+      }));
+      assert.dom(this.element).hasText('1234');
+    });
+  });
+});
+define("ember-path/tests/integration/helpers/isfilepath-test", ["@ember/template-factory", "qunit", "ember-qunit", "@ember/test-helpers"], function (_templateFactory, _qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  (0, _qunit.module)('Integration | Helper | isfilepath', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks); // TODO: Replace this with your real tests.
+
+    (0, _qunit.test)('it renders', async function (assert) {
+      this.set('inputValue', '1234');
+      await (0, _testHelpers.render)((0, _templateFactory.createTemplateFactory)(
+      /*
+        {{isfilepath this.inputValue}}
+      */
+      {
+        "id": "EnAJ15yW",
+        "block": "[[[1,[28,[35,0],[[30,0,[\"inputValue\"]]],null]]],[],false,[\"isfilepath\"]]",
         "moduleName": "(unknown template module)",
         "isStrictMode": false
       }));
@@ -89,26 +111,14 @@ define("ember-path/tests/test-helper", ["ember-path/app", "ember-path/config/env
   (0, _qunitDom.setup)(QUnit.assert);
   (0, _emberQunit.start)();
 });
-define("ember-path/tests/unit/controllers/getfilesall/file-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+define("ember-path/tests/unit/controllers/files-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
   "use strict";
 
-  (0, _qunit.module)('Unit | Controller | getfilesall/file', function (hooks) {
+  (0, _qunit.module)('Unit | Controller | files', function (hooks) {
     (0, _emberQunit.setupTest)(hooks); // TODO: Replace this with your real tests.
 
     (0, _qunit.test)('it exists', function (assert) {
-      let controller = this.owner.lookup('controller:getfilesall/file');
-      assert.ok(controller);
-    });
-  });
-});
-define("ember-path/tests/unit/controllers/getfilesall/files-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
-  "use strict";
-
-  (0, _qunit.module)('Unit | Controller | getfilesall/files', function (hooks) {
-    (0, _emberQunit.setupTest)(hooks); // TODO: Replace this with your real tests.
-
-    (0, _qunit.test)('it exists', function (assert) {
-      let controller = this.owner.lookup('controller:getfilesall/files');
+      let controller = this.owner.lookup('controller:files');
       assert.ok(controller);
     });
   });
@@ -120,6 +130,17 @@ define("ember-path/tests/unit/routes/application-test", ["qunit", "ember-qunit"]
     (0, _emberQunit.setupTest)(hooks);
     (0, _qunit.test)('it exists', function (assert) {
       let route = this.owner.lookup('route:application');
+      assert.ok(route);
+    });
+  });
+});
+define("ember-path/tests/unit/routes/files-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+  "use strict";
+
+  (0, _qunit.module)('Unit | Route | files', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks);
+    (0, _qunit.test)('it exists', function (assert) {
+      let route = this.owner.lookup('route:files');
       assert.ok(route);
     });
   });
@@ -142,39 +163,6 @@ define("ember-path/tests/unit/routes/getfiles/files-test", ["qunit", "ember-quni
     (0, _emberQunit.setupTest)(hooks);
     (0, _qunit.test)('it exists', function (assert) {
       let route = this.owner.lookup('route:getfiles/files');
-      assert.ok(route);
-    });
-  });
-});
-define("ember-path/tests/unit/routes/getfilesall-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
-  "use strict";
-
-  (0, _qunit.module)('Unit | Route | getfilesall', function (hooks) {
-    (0, _emberQunit.setupTest)(hooks);
-    (0, _qunit.test)('it exists', function (assert) {
-      let route = this.owner.lookup('route:getfilesall');
-      assert.ok(route);
-    });
-  });
-});
-define("ember-path/tests/unit/routes/getfilesall/file-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
-  "use strict";
-
-  (0, _qunit.module)('Unit | Route | getfilesall/file', function (hooks) {
-    (0, _emberQunit.setupTest)(hooks);
-    (0, _qunit.test)('it exists', function (assert) {
-      let route = this.owner.lookup('route:getfilesall/file');
-      assert.ok(route);
-    });
-  });
-});
-define("ember-path/tests/unit/routes/getfilesall/files-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
-  "use strict";
-
-  (0, _qunit.module)('Unit | Route | getfilesall/files', function (hooks) {
-    (0, _emberQunit.setupTest)(hooks);
-    (0, _qunit.test)('it exists', function (assert) {
-      let route = this.owner.lookup('route:getfilesall/files');
       assert.ok(route);
     });
   });
