@@ -54,6 +54,47 @@
     }
   });
 });
+;define("ember-path/components/notification-container", ["exports", "ember-cli-notifications/components/notification-container"], function (_exports, _notificationContainer) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _notificationContainer.default;
+    }
+  });
+});
+;define("ember-path/components/notification-message", ["exports", "ember-cli-notifications/components/notification-message", "ember-get-config"], function (_exports, _notificationMessage, _emberGetConfig) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  /* eslint-disable ember/require-tagless-components, prettier/prettier */
+  const globals = _emberGetConfig.default['ember-cli-notifications'] || {}; // Import app config object
+
+  var _default = _notificationMessage.default.extend({
+    init() {
+      this._super(...arguments);
+
+      this.icons = globals.icons || 'svg';
+      this.svgs = {
+        'success': 'success',
+        'warning': 'warning',
+        'info': 'info',
+        'error': 'error'
+      };
+    }
+
+  });
+
+  _exports.default = _default;
+});
 ;define("ember-path/components/upload", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking"], function (_exports, _component, _templateFactory, _component2, _tracking) {
   "use strict";
 
@@ -115,7 +156,7 @@
     }
   });
 });
-;define("ember-path/controllers/files", ["exports", "@ember/controller", "@ember/object", "@ember/service"], function (_exports, _controller, _object, _service) {
+;define("ember-path/controllers/files", ["exports", "@ember/controller", "@ember/service"], function (_exports, _controller, _service) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -123,23 +164,36 @@
   });
   _exports.default = void 0;
 
-  var _class;
+  var _class, _descriptor, _descriptor2;
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
   let FilesController = (_class = class FilesController extends _controller.default {
-    go_back(filepathtitle) {
-      console.log('backfilepath : ', filepathtitle);
-      let pathArr = filepathtitle.split('/');
-      console.log('patharr in go_back : ', pathArr);
-      pathArr.pop();
-      console.log('patharr in go_back : ', pathArr);
-      let newPath = pathArr.join('/');
-      console.log('newPath : ', newPath);
-      return newPath;
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "notifications", _descriptor, this);
+
+      _initializerDefineProperty(this, "router", _descriptor2, this);
     }
 
-  }, (_applyDecoratedDescriptor(_class.prototype, "go_back", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "go_back"), _class.prototype)), _class);
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "notifications", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "router", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class);
   _exports.default = FilesController;
 });
 ;define("ember-path/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
@@ -195,6 +249,19 @@
 
   _exports.default = _default;
 });
+;define("ember-path/helpers/equal", ["exports", "ember-cli-notifications/helpers/equal"], function (_exports, _equal) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _equal.default;
+    }
+  });
+});
 ;define("ember-path/helpers/goback", ["exports", "@ember/component/helper"], function (_exports, _helper) {
   "use strict";
 
@@ -209,23 +276,17 @@
     // return positional;
     var oldFilePath = JSON.parse(JSON.stringify(filepathtitle))[0];
 
-    if (oldFilePath !== null && oldFilePath !== '') {
+    if (oldFilePath != '/') {
       console.log('backfilepath : ', oldFilePath);
       let pathArr = oldFilePath.split('/');
       console.log('patharr in go_back : ', pathArr);
       pathArr.pop();
       console.log('patharr in go_back : ', pathArr);
-
-      if (pathArr <= 0) {
-        return '/';
-      } else {
-        let newPath = pathArr.join('/');
-        console.log('newPath : ', newPath);
-        return newPath;
-      }
+      let newPath = pathArr.join('/');
+      newPath.replaceAll('//', '/');
+      console.log('newPath : ', newPath);
+      return newPath == '' ? '#' : newPath;
     }
-
-    return '/';
   });
 
   _exports.default = _default;
@@ -242,7 +303,10 @@
   /*, named*/
   ) {
     // return positional;
-    if (!(filepathtitle !== undefined && filepathtitle !== '' && filepathtitle !== '/')) {
+    var filepath = JSON.parse(JSON.stringify(filepathtitle))[0];
+    console.log('filepath in isfilepath helper : ', filepath);
+
+    if (filepath == undefined || filepath == '' || filepath == '/') {
       return false;
     }
 
@@ -270,6 +334,38 @@
   _exports.default = void 0;
   var _default = _pluralize.default;
   _exports.default = _default;
+});
+;define("ember-path/helpers/prevent-default", ["exports", "ember-on-modifier/helpers/prevent-default"], function (_exports, _preventDefault) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _preventDefault.default;
+    }
+  });
+  Object.defineProperty(_exports, "preventDefault", {
+    enumerable: true,
+    get: function () {
+      return _preventDefault.preventDefault;
+    }
+  });
+});
+;define("ember-path/helpers/route-action", ["exports", "ember-route-action-helper/helpers/route-action"], function (_exports, _routeAction) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _routeAction.default;
+    }
+  });
 });
 ;define("ember-path/helpers/singularize", ["exports", "ember-inflector/lib/helpers/singularize"], function (_exports, _singularize) {
   "use strict";
@@ -525,7 +621,7 @@
   });
   _exports.default = void 0;
 
-  var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+  var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -543,18 +639,22 @@
 
       _initializerDefineProperty(this, "session", _descriptor2, this);
 
-      _initializerDefineProperty(this, "files", _descriptor3, this);
+      _initializerDefineProperty(this, "notifications", _descriptor3, this);
 
-      _initializerDefineProperty(this, "filepathtitle", _descriptor4, this);
+      _initializerDefineProperty(this, "files", _descriptor4, this);
+
+      _initializerDefineProperty(this, "filepathtitle", _descriptor5, this);
     }
 
     model(params) {
       var _dec, _class3;
 
       console.log('params : ', params);
+      console.log('params.path : ', params.path);
       console.log('history : ', window.history);
       let file = (_dec = (0, _object.computed)('filePathTitle'), (_class3 = class file {
-        constructor(filePath) {
+        constructor() {
+          let filePath = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/';
           (0, _object.set)(this, 'filePathTitle', filePath);
         }
 
@@ -571,16 +671,23 @@
       }, (_applyDecoratedDescriptor(_class3.prototype, "filePath", [_dec], Object.getOwnPropertyDescriptor(_class3.prototype, "filePath"), _class3.prototype)), _class3));
       let File = new file(params.path);
       this.filepathtitle = File.filePath;
+      this.filepathtitle.split('//').join('/');
       console.log('File.filepath : ', File.filePath);
       console.log('filepathtitle from file class : ', this.filepathtitle);
 
       if (params.path == undefined || params.path == '') {
-        this.files = fetch('http://localhost:8081/getfiles/').then(response => response.json()).then(data => {
+        this.files = fetch('/getfiles').then(response => response.json()).then(data => {
+          console.log(data);
+          return data;
+        });
+      } else if (params.path == '/') {
+        console.log('in else if : ', params.path);
+        this.files = fetch('/getfiles').then(response => response.json()).then(data => {
           console.log(data);
           return data;
         });
       } else {
-        this.files = fetch('http://localhost:8081/getfiles/' + params.path).then(response => response.json()).then(data => {
+        this.files = fetch('/getfiles/' + params.path).then(response => response.json()).then(data => {
           console.log(data);
           return data;
         });
@@ -592,15 +699,60 @@
 
     setupController(controller, model) {
       super.setupController(controller, model);
+      window.scrollTo(0, 0);
 
       if (this.filepathtitle !== undefined) {
         controller.set('filepathtitle', this.filepathtitle);
+        controller.set('filepathdisplay', this.filepathtitle.replace('#', '/'));
         console.log('controller filepath : ', this.filepathtitle);
-      } // else {
-      //   controller.set('filepathtitle', '/');
-      //   console.log('controller filepath : ', this.filepathtitle);
-      // }
+      } else {//   controller.set('filepathtitle', '/');
+        //   console.log('controller filepath : ', this.filepathtitle);
+      }
+    }
 
+    create_folder() {
+      var folname = foldername.value;
+      var relPath = this.filepathtitle;
+
+      if (relPath == '' || relPath == '/') {
+        relPath = 'root';
+      }
+
+      if (relPath == '#') relPath = 'root';
+      console.log('folname : ', folname, 'relpath : ', relPath);
+      var result = $.ajax({
+        type: 'POST',
+        url: '/createfolder/',
+        data: {
+          foldername: folname,
+          relpath: relPath
+        },
+        global: false,
+        async: false,
+        success: function (dat) {
+          return dat;
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      }).responseText;
+      const rsObj = JSON.parse(result);
+      console.log('rsObj in create_folder : ', rsObj);
+
+      if (rsObj.status == 'success') {
+        this.refresh();
+        this.notifications.success('Folder has been created successfully', {
+          autoClear: true,
+          clearDuration: 3000
+        });
+      }
+
+      if (rsObj.status == 'already-present') {
+        this.notifications.info('Folder is already present', {
+          autoClear: true,
+          clearDuration: 3000
+        });
+      }
     }
 
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "router", [_service.inject], {
@@ -613,17 +765,24 @@
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "files", [_tracking.tracked], {
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "notifications", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "filepathtitle", [_tracking.tracked], {
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "files", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  })), _class);
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "filepathtitle", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return '/';
+    }
+  }), _applyDecoratedDescriptor(_class.prototype, "create_folder", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "create_folder"), _class.prototype)), _class);
   _exports.default = FilesRoute;
 });
 ;define("ember-path/serializers/-default", ["exports", "@ember-data/serializer/json"], function (_exports, _json) {
@@ -662,6 +821,19 @@
     enumerable: true,
     get: function () {
       return _rest.default;
+    }
+  });
+});
+;define("ember-path/services/notifications", ["exports", "ember-cli-notifications/services/notifications"], function (_exports, _notifications) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _notifications.default;
     }
   });
 });
@@ -771,8 +943,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "jpZpn5cX",
-    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\\n\\n\"],[10,\"h1\"],[12],[1,\"Index of /\"],[1,[34,1]],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"margin-left: 30px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Size\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Last Modified\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[41,[28,[37,3],[[33,1]],null],[[[1,\"  \"],[10,\"tr\"],[12],[1,\"\\n      \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"0\"],[13],[1,\"\\n\"],[1,\"      \"],[10,\"td\"],[12],[8,[39,4],[[24,0,\"button-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[28,[37,5],[[33,1]],null]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/folder-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"img\"],[14,\"src\",\"/assets/images/back-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,\"Parent Folder\"],[13]],[]]]]],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[42,[28,[37,7],[[28,[37,7],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[30,2,[\"id\"]]]]],[12],[1,\" \\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,4],[[24,0,\"button-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[30,2,[\"filePath\"]]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/folder-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[1,\"/\"],[13]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,\"img\"],[14,\"src\",\"/assets/images/file-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,3],[15,6,[29,[\"/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[13],[13],[13],[1,\"\\n\"]],[]]],[1,\"            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[28,[35,8],[[30,2,[\"size\"]]],null]],[13],[1,\"\\n            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"lmod\"]]],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[10,\"h3\"],[12],[1,[34,1]],[13],[1,\"\\n\\n\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,1]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"/createfolder\"],[14,\"method\",\"post\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Folder Name : \"],[13],[10,\"input\"],[14,3,\"foldername\"],[14,4,\"text\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,1]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"createfolderbutton\"],[14,2,\"Create Folder\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"filepathtitle\",\"if\",\"isfilepath\",\"link-to\",\"goback\",\"each\",\"-track-array\",\"sizer\"]]",
+    "id": "mTNbes1t",
+    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\\n\"],[1,[28,[35,1],null,[[\"position\",\"zindex\"],[\"top\",\"9999\"]]]],[1,\"\\n\\n\"],[10,\"h1\"],[12],[1,\"Index of \"],[1,[34,2]],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"margin-left: 30px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Size\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Last Modified\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[41,[28,[37,4],[[33,5]],null],[[[1,\"  \"],[10,\"tr\"],[12],[1,\"\\n      \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"0\"],[13],[1,\"\\n\"],[1,\"      \"],[10,\"td\"],[12],[8,[39,6],[[24,0,\"button-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[28,[37,7],[[33,5]],null]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/back-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,\"Parent Folder\"],[13]],[]]]]],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[42,[28,[37,9],[[28,[37,9],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[30,2,[\"id\"]]]]],[12],[1,\" \\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,6],[[24,0,\"button-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[30,2,[\"filePath\"]]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/folder-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[1,\"/\"],[13]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,\"img\"],[14,\"src\",\"/assets/images/file-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,3],[15,6,[29,[\"/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[13],[13],[13],[1,\"\\n\"]],[]]],[1,\"            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[28,[35,10],[[30,2,[\"size\"]]],null]],[13],[1,\"\\n            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"lmod\"]]],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\\n\"],[10,\"h3\"],[12],[1,[34,2]],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n\\n\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"td\"],[12],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,2],[12],[1,\"Select File : \"],[13],[1,\" \"],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,5]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"\\n        \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n                \"],[10,\"label\"],[12],[1,\"Folder Name : \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n                \"],[1,[28,[35,11],null,[[\"type\",\"id\",\"value\",\"name\"],[\"text\",\"foldername\",[33,12],\"foldername\"]]]],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n                \"],[1,[28,[35,11],null,[[\"type\",\"id\",\"value\",\"name\"],[\"hidden\",\"relpath\",[28,[30,0,[\"filepathtitle\"]],null,null],\"relpath\"]]]],[1,\"\\n            \"],[13],[1,\"\\n            \"],[11,\"button\"],[24,0,\"button\"],[24,4,\"submit\"],[4,[38,13],[\"click\",[28,[37,14],[\"create_folder\"],null]],null],[12],[1,\"Create Folder\"],[13],[1,\"\\n        \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\\n\\n\"],[10,\"hr\"],[12],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"notification-container\",\"filepathdisplay\",\"if\",\"isfilepath\",\"filepathtitle\",\"link-to\",\"goback\",\"each\",\"-track-array\",\"sizer\",\"input\",\"foldername\",\"on\",\"route-action\"]]",
     "moduleName": "ember-path/templates/files.hbs",
     "isStrictMode": false
   });
@@ -854,7 +1026,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("ember-path/app")["default"].create({"name":"ember-path","version":"0.0.0+8ee27d93"});
+            require("ember-path/app")["default"].create({"name":"ember-path","version":"0.0.0+82754639"});
           }
         
 //# sourceMappingURL=ember-path.map

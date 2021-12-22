@@ -11,6 +11,9 @@ downloadjs.get('/', (req, res) => {
     var downloadpath = appRootPath;
     res.download(downloadpath+'/'+fileName, (error) => {
         console.log(error);
+        if (error)  res.status(503).json({
+            'status' : 'failed'
+        });
     });
 
 

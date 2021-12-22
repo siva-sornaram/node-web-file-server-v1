@@ -39,14 +39,14 @@ getfiles.get('/', (req, res) => {
                 console.log('relpath is empty');
                 var files = fs.readdirSync(totalPath);
                 files.forEach((val, ind) => {
-                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime);
+                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             } else {
                 console.log('relpath is : ' , relpath);
                 var files = fs.readdirSync(totalPath+'/'+relpath);
                 files.forEach((val, ind) => {
-                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+relpath+'/'+val).isDirectory(), relpath+'/'+val, fs.statSync(totalPath+'/'+relpath+'/'+val).size, fs.statSync(totalPath+'/'+relpath+'/'+val).mtime);
+                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+relpath+'/'+val).isDirectory(), relpath+'/'+val, fs.statSync(totalPath+'/'+relpath+'/'+val).size, fs.statSync(totalPath+'/'+relpath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             }
@@ -76,14 +76,14 @@ getfiles.get('/*', (req, res) => {
                 console.log('relpath is empty');
                 var files = fs.readdirSync(totalPath);
                 files.forEach((val, ind) => {
-                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime);
+                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             } else {
                 console.log('relpath is : ' , relpath);
                 var files = fs.readdirSync(totalPath+'/'+relpath);
                 files.forEach((val, ind) => {
-                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+relpath+'/'+val).isDirectory(), relpath+'/'+val, fs.statSync(totalPath+'/'+relpath+'/'+val).size, fs.statSync(totalPath+'/'+relpath+'/'+val).mtime);
+                    var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+relpath+'/'+val).isDirectory(), relpath+'/'+val, fs.statSync(totalPath+'/'+relpath+'/'+val).size, fs.statSync(totalPath+'/'+relpath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             }

@@ -3,6 +3,9 @@ const newFolder = express();
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+// const cors = require('cors');
+
+// newFolder.use(cors());
 
 newFolder.use(bodyParser.urlencoded({ extended: false }));
 
@@ -18,14 +21,28 @@ newFolder.post('/', (req, res) => {
     console.log('dir in createfolder : ', dir);
     console.log('!fs.existsync : ', !fs.existsSync(dir));
 
-    if (relpath != undefined && relpath != '') {
+    if (relpath == 'root') {
+        if (!fs.existsSync(dir+'/'+folname)) {
+            fs.mkdirSync(dir+'/'+folname);
+            console.log("Directory Created in ", dir+'/'+folname);
+            res.json({
+                'status' : 'success'
+            });
+        }
+    }
+
+    if (relpath != undefined && relpath != '' && relpath != 'root') {
         if (!fs.existsSync(dir+'/'+relpath+'/'+folname)) {
             fs.mkdirSync(dir+'/'+relpath+'/'+folname);
             console.log("Directory Created in ", dir+'/'+relpath+'/'+folname);
-            res.status(200).send(("Directory Created in " +'/'+relpath+ dir+'/'+folname).toString());
+            res.json({
+                'status' : 'success'
+            });
         } else {
             console.log("Directory already exists");
-            res.status(200).send(("Directory already exists").toString());
+            res.json({
+                'status' : 'already-present'
+            })
         }
     }
 
