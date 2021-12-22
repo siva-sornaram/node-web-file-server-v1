@@ -15,7 +15,8 @@ program.version('0.0.1');
 
 // app.use(morgan('Remote Addr \: :remote-addr \n -- Remote User \: :remote-user at [:date] \n -- Method \: :method \n -- URL \: :url - HTTP/:http-version \n -- Status Code \: :status at :response-time ms \n -- Referrer \: :referrer \n -- User Agent \: :user-agent'));
 
-app.use(morgan('common'));
+//app.use(morgan('common'));
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'));
 
 global.appRootPath = process.cwd();
 global.portNum = 8081;
