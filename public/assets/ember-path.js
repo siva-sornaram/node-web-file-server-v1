@@ -277,14 +277,14 @@
     var oldFilePath = JSON.parse(JSON.stringify(filepathtitle))[0];
 
     if (oldFilePath != '/') {
-      console.log('backfilepath : ', oldFilePath);
-      let pathArr = oldFilePath.split('/');
-      console.log('patharr in go_back : ', pathArr);
-      pathArr.pop();
-      console.log('patharr in go_back : ', pathArr);
+      // console.log('backfilepath : ', oldFilePath);
+      let pathArr = oldFilePath.split('/'); // console.log('patharr in go_back : ', pathArr);
+
+      pathArr.pop(); // console.log('patharr in go_back : ', pathArr);
+
       let newPath = pathArr.join('/');
-      newPath.replaceAll('//', '/');
-      console.log('newPath : ', newPath);
+      newPath.replaceAll('//', '/'); // console.log('newPath : ', newPath);
+
       return newPath == '' ? '#' : newPath;
     }
   });
@@ -303,8 +303,7 @@
   /*, named*/
   ) {
     // return positional;
-    var filepath = JSON.parse(JSON.stringify(filepathtitle))[0];
-    console.log('filepath in isfilepath helper : ', filepath);
+    var filepath = JSON.parse(JSON.stringify(filepathtitle))[0]; // console.log('filepath in isfilepath helper : ', filepath);
 
     if (filepath == undefined || filepath == '' || filepath == '/') {
       return false;
@@ -649,9 +648,9 @@
     model(params) {
       var _dec, _class3;
 
-      console.log('params : ', params);
-      console.log('params.path : ', params.path);
-      console.log('history : ', window.history);
+      console.log('params : ', params); // console.log('params.path : ', params.path );
+      // console.log('history : ', window.history);
+
       let file = (_dec = (0, _object.computed)('filePathTitle'), (_class3 = class file {
         constructor() {
           let filePath = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/';
@@ -659,41 +658,39 @@
         }
 
         get filePath() {
-          console.log('get filepath in class : ', this.filePathTitle);
+          // console.log('get filepath in class : ', this.filePathTitle);
           return this.filePathTitle;
         }
 
         set filePath(path) {
-          let pathArr = path.split('/');
-          console.log('set filepath in class : ', pathArr);
+          let pathArr = path.split('/'); // console.log('set filepath in class : ', pathArr);
         }
 
       }, (_applyDecoratedDescriptor(_class3.prototype, "filePath", [_dec], Object.getOwnPropertyDescriptor(_class3.prototype, "filePath"), _class3.prototype)), _class3));
       let File = new file(params.path);
       this.filepathtitle = File.filePath;
-      this.filepathtitle.split('//').join('/');
-      console.log('File.filepath : ', File.filePath);
-      console.log('filepathtitle from file class : ', this.filepathtitle);
+      this.filepathtitle.split('//').join('/'); // console.log('File.filepath : ', File.filePath);
+      // console.log('filepathtitle from file class : ', this.filepathtitle);
 
       if (params.path == undefined || params.path == '') {
         this.files = fetch('/getfiles').then(response => response.json()).then(data => {
-          console.log(data);
+          //   console.log(data);
           return data;
         });
       } else if (params.path == '/') {
-        console.log('in else if : ', params.path);
+        // console.log('in else if : ', params.path);
         this.files = fetch('/getfiles').then(response => response.json()).then(data => {
-          console.log(data);
+          //   console.log(data);
           return data;
         });
       } else {
         this.files = fetch('/getfiles/' + params.path).then(response => response.json()).then(data => {
-          console.log(data);
+          //   console.log(data);
           return data;
         });
-      }
+      } // console.log(this.files);
 
-      console.log(this.files);
+
       return this.files;
     }
 
@@ -703,8 +700,7 @@
 
       if (this.filepathtitle !== undefined) {
         controller.set('filepathtitle', this.filepathtitle);
-        controller.set('filepathdisplay', this.filepathtitle.replace('#', '/'));
-        console.log('controller filepath : ', this.filepathtitle);
+        controller.set('filepathdisplay', this.filepathtitle.replace('#', '/')); //   console.log('controller filepath : ', this.filepathtitle);
       } else {//   controller.set('filepathtitle', '/');
         //   console.log('controller filepath : ', this.filepathtitle);
       }
@@ -718,8 +714,8 @@
         relPath = 'root';
       }
 
-      if (relPath == '#') relPath = 'root';
-      console.log('folname : ', folname, 'relpath : ', relPath);
+      if (relPath == '#') relPath = 'root'; // console.log('folname : ', folname, 'relpath : ', relPath);
+
       var result = $.ajax({
         type: 'POST',
         url: '/createfolder/',
@@ -736,8 +732,7 @@
           console.log(err);
         }
       }).responseText;
-      const rsObj = JSON.parse(result);
-      console.log('rsObj in create_folder : ', rsObj);
+      const rsObj = JSON.parse(result); // console.log('rsObj in create_folder : ', rsObj);
 
       if (rsObj.status == 'success') {
         this.refresh();
@@ -1026,7 +1021,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("ember-path/app")["default"].create({"name":"ember-path","version":"0.0.0+82754639"});
+            require("ember-path/app")["default"].create({"name":"ember-path","version":"0.0.0+37fde558"});
           }
         
 //# sourceMappingURL=ember-path.map

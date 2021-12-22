@@ -5,7 +5,17 @@ const app = express();
 const path = require('path');
 const fileOptions = require(path.resolve(__dirname, './fileoptions'));
 const { program } = require('commander');
+const morgan = require('morgan');
 program.version('0.0.1');
+
+// morgan.token('date', function() {
+//     var newDate = new Date().toLocaleString("en-US", { timeZone: 'Asia/Kolkata' });
+//     return newDate;
+// });
+
+// app.use(morgan('Remote Addr \: :remote-addr \n -- Remote User \: :remote-user at [:date] \n -- Method \: :method \n -- URL \: :url - HTTP/:http-version \n -- Status Code \: :status at :response-time ms \n -- Referrer \: :referrer \n -- User Agent \: :user-agent'));
+
+app.use(morgan('common'));
 
 global.appRootPath = process.cwd();
 global.portNum = 8081;

@@ -27,30 +27,30 @@ class File {
 
 
 getfiles.get('/', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     var relpath = req.body.relpath;
-    console.log("path : " , relpath);
+    // console.log("path : " , relpath);
 
     if (fileOptions.directoryExists(totalPath)) {
-        console.log("Directory Exits");
-        console.log(fs.statSync(totalPath).mtime);
+        // console.log("Directory Exits");
+        // console.log(fs.statSync(totalPath).mtime);
         try {
             if (relpath == '' || relpath == undefined) {
-                console.log('relpath is empty');
+                // console.log('relpath is empty');
                 var files = fs.readdirSync(totalPath);
                 files.forEach((val, ind) => {
                     var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             } else {
-                console.log('relpath is : ' , relpath);
+                // console.log('relpath is : ' , relpath);
                 var files = fs.readdirSync(totalPath+'/'+relpath);
                 files.forEach((val, ind) => {
                     var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+relpath+'/'+val).isDirectory(), relpath+'/'+val, fs.statSync(totalPath+'/'+relpath+'/'+val).size, fs.statSync(totalPath+'/'+relpath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             }
-            console.log(files);
+            // console.log(files);
         } catch (err){
             console.log(err);
         }
@@ -65,29 +65,29 @@ getfiles.get('/', (req, res) => {
 
 
 getfiles.get('/*', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     var relpath = req.params[0];
-    console.log("path : " , relpath);
+    // console.log("path : " , relpath);
     if (fileOptions.directoryExists(totalPath)) {
-        console.log("Directory Exits");
-        console.log(fs.statSync(totalPath).size);
+        // console.log("Directory Exits");
+        // console.log(fs.statSync(totalPath).size);
         try {
             if (relpath == '' || relpath == undefined) {
-                console.log('relpath is empty');
+                // console.log('relpath is empty');
                 var files = fs.readdirSync(totalPath);
                 files.forEach((val, ind) => {
                     var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+val).isDirectory(), val, fs.statSync(totalPath+'/'+val).size, fs.statSync(totalPath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             } else {
-                console.log('relpath is : ' , relpath);
+                // console.log('relpath is : ' , relpath);
                 var files = fs.readdirSync(totalPath+'/'+relpath);
                 files.forEach((val, ind) => {
                     var fileobj = new File(ind+1, val, fs.statSync(totalPath+'/'+relpath+'/'+val).isDirectory(), relpath+'/'+val, fs.statSync(totalPath+'/'+relpath+'/'+val).size, fs.statSync(totalPath+'/'+relpath+'/'+val).mtime.toLocaleString("en-US", { timeZone: 'Asia/Kolkata' }));
                     final_files.push(fileobj);
                 });
             }
-            console.log(files);
+            // console.log(files);
         } catch (err){
             console.log(err);
         }

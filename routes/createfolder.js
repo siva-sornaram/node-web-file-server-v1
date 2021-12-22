@@ -13,13 +13,13 @@ newFolder.use(bodyParser.json());
 
 newFolder.post('/', (req, res) => {
     var dir = appRootPath;
-    console.log(req.body);
+    // console.log(req.body);
     var folname = req.body.foldername;
     var relpath = req.body.relpath;
 
-    console.log('folname in createfolder : ', folname, 'relpath in createfolder : ', relpath);
-    console.log('dir in createfolder : ', dir);
-    console.log('!fs.existsync : ', !fs.existsSync(dir));
+    // console.log('folname in createfolder : ', folname, 'relpath in createfolder : ', relpath);
+    // console.log('dir in createfolder : ', dir);
+    // console.log('!fs.existsync : ', !fs.existsSync(dir));
 
     if (relpath == 'root') {
         if (!fs.existsSync(dir+'/'+folname)) {

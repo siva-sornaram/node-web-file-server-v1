@@ -35,7 +35,7 @@ module.exports.webFileServer = function(port) {
         return args;
     }
     const args = getArgs();
-    console.log(args);
+    // console.log(args);
 
     
     const getFilesRoute = require('./routes/getfiles');
