@@ -750,6 +750,63 @@
       }
     }
 
+    upload_files() {
+      var fileObj = $('input[name="file"]').get(0).files;
+      var relPath = this.filepathtitle;
+      var rsObj = '';
+      var formData = new FormData();
+      console.log('fileObj : ', fileObj, 'type : ', typeof fileObj, 'relPath : ', relPath);
+      Object.keys(fileObj).forEach(key => {
+        formData.append('file', fileObj[key]);
+      });
+      formData.append('relpath', relPath);
+
+      for (var key of formData.entries()) {
+        console.log(key[0], ', ', key[1]);
+      }
+
+      console.log('formdata : ', formData);
+      var result = $.ajax({
+        type: 'POST',
+        url: '/uploadfiles/',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        async: false,
+        global: false,
+        success: function (dat) {
+          console.log('dat : ', dat);
+          rsObj = dat;
+          return dat;
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      }).responseText;
+      console.log('rsObj : ', rsObj);
+
+      if (rsObj.status == 'success') {
+        this.refresh();
+        this.notifications.success('Files have been uploaded successfully', {
+          autoClear: true,
+          clearDuration: 3000
+        });
+      } else if (rsObj.status == 'empty') {
+        this.refresh();
+        this.notifications.error('Files List cannot be empty', {
+          autoClear: true,
+          clearDuration: 3000
+        });
+      } else {
+        this.refresh();
+        this.notifications.error('Files have not been uploaded', {
+          autoClear: true,
+          clearDuration: 3000
+        });
+      }
+    }
+
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "router", [_service.inject], {
     configurable: true,
     enumerable: true,
@@ -777,7 +834,7 @@
     initializer: function () {
       return '/';
     }
-  }), _applyDecoratedDescriptor(_class.prototype, "create_folder", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "create_folder"), _class.prototype)), _class);
+  }), _applyDecoratedDescriptor(_class.prototype, "create_folder", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "create_folder"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "upload_files", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "upload_files"), _class.prototype)), _class);
   _exports.default = FilesRoute;
 });
 ;define("ember-path/serializers/-default", ["exports", "@ember-data/serializer/json"], function (_exports, _json) {
@@ -938,8 +995,8 @@
   _exports.default = void 0;
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "JTLuVLVT",
-    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\\n\"],[1,[28,[35,1],null,[[\"position\",\"zindex\"],[\"top\",\"9999\"]]]],[1,\"\\n\\n\"],[10,0],[14,0,\"page-header\"],[12],[1,\"\\n  \"],[10,\"h1\"],[12],[1,\"Index of \"],[1,[34,2]],[13],[1,\"\\n\"],[13],[1,\"\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"margin-left: 30px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Size\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Last Modified\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[41,[28,[37,4],[[33,5]],null],[[[1,\"  \"],[10,\"tr\"],[12],[1,\"\\n      \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"0\"],[13],[1,\"\\n\"],[1,\"      \"],[10,\"td\"],[12],[8,[39,6],[[24,0,\"btn-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[28,[37,7],[[33,5]],null]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/back-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,\"Parent Folder\"],[13]],[]]]]],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[42,[28,[37,9],[[28,[37,9],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[30,2,[\"id\"]]]]],[12],[1,\" \\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,6],[[24,0,\"btn-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[30,2,[\"filePath\"]]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/folder-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[1,\"/\"],[13]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,\"img\"],[14,\"src\",\"/assets/images/file-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,3],[15,6,[29,[\"/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[13],[13],[13],[1,\"\\n\"]],[]]],[1,\"            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[28,[35,10],[[30,2,[\"size\"]]],null]],[13],[1,\"\\n            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"lmod\"]]],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\"],[10,\"br\"],[12],[13],[1,\"\\n\\n\"],[10,\"h3\"],[12],[1,[34,2]],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n      \"],[10,\"form\"],[14,\"action\",\"/uploadfiles\"],[14,\"method\",\"post\"],[14,\"enctype\",\"multipart/form-data\"],[12],[1,\"\\n        \"],[10,\"label\"],[14,0,\"control-label col-sm-2\"],[12],[10,\"strong\"],[12],[1,\"Select File :\"],[13],[13],[10,\"input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,3,\"relpath\"],[15,2,[36,5]],[14,4,\"hidden\"],[12],[13],[1,\"\\n        \"],[10,\"input\"],[14,1,\"uploadbutton\"],[14,2,\"Upload Files\"],[14,0,\"btn btn-primary btn-sm\"],[14,4,\"submit\"],[12],[13],[1,\"\\n      \"],[13],[1,\"\\n\\n\\n\"],[10,\"br\"],[12],[13],[1,\"\\n\"],[10,\"br\"],[12],[13],[1,\"\\n\\n\"],[10,0],[14,0,\"form-group\"],[12],[1,\"\\n  \"],[10,\"label\"],[14,0,\"control-label col-sm-2\"],[12],[10,\"strong\"],[12],[1,\"Folder Name :\"],[13],[13],[1,\"\\n  \"],[1,[28,[35,11],null,[[\"type\",\"id\",\"value\",\"name\",\"placeholder\",\"class\"],[\"text\",\"foldername\",[33,12],\"foldername\",\"Enter the Folder Name\",\"form-control input-sm col-sm-4\"]]]],[1,\"\\n  \"],[1,[28,[35,11],null,[[\"type\",\"id\",\"value\",\"name\"],[\"hidden\",\"relpath\",[28,[30,0,[\"filepathtitle\"]],null,null],\"relpath\"]]]],[1,\"\\n  \"],[10,\"br\"],[12],[13],[1,\"\\n  \"],[11,\"button\"],[24,0,\"btn btn-primary btn-sm\"],[24,4,\"submit\"],[4,[38,13],[\"click\",[28,[37,14],[\"create_folder\"],null]],null],[12],[1,\"Create Folder\"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"notification-container\",\"filepathdisplay\",\"if\",\"isfilepath\",\"filepathtitle\",\"link-to\",\"goback\",\"each\",\"-track-array\",\"sizer\",\"input\",\"foldername\",\"on\",\"route-action\"]]",
+    "id": "iw/6k3KR",
+    "block": "[[[1,[28,[35,0],[\"Files\"],null]],[1,\"\\n\\n\"],[1,[28,[35,1],null,[[\"position\",\"zindex\"],[\"top\",\"9999\"]]]],[1,\"\\n\\n\"],[10,0],[14,0,\"page-header\"],[12],[1,\"\\n  \"],[10,\"h1\"],[12],[1,\"Index of \"],[1,[34,2]],[13],[1,\"\\n\"],[13],[1,\"\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n\\n\"],[10,\"table\"],[14,5,\"margin-left: 30px;\"],[12],[1,\"\\n  \"],[10,\"tr\"],[12],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Sl.No\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"File Name\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Size\"],[13],[1,\"\\n    \"],[10,\"th\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"Last Modified\"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[41,[28,[37,4],[[33,5]],null],[[[1,\"  \"],[10,\"tr\"],[12],[1,\"\\n      \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,\"0\"],[13],[1,\"\\n\"],[1,\"      \"],[10,\"td\"],[12],[8,[39,6],[[24,0,\"btn-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[28,[37,7],[[33,5]],null]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/back-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,\"Parent Folder\"],[13]],[]]]]],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[42,[28,[37,9],[[28,[37,9],[[30,1]],null]],null],null,[[[1,\"        \"],[10,\"tr\"],[15,1,[29,[[30,2,[\"id\"]]]]],[12],[1,\" \\n          \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"id\"]]],[13],[1,\"\\n\"],[41,[30,2,[\"isDir\"]],[[[1,\"                \"],[8,[39,6],[[24,0,\"btn-link\"],[24,5,\"padding-left: 10px;\"]],[[\"@route\",\"@model\"],[\"files\",[29,[[30,2,[\"filePath\"]]]]]],[[\"default\"],[[[[10,\"img\"],[14,\"src\",\"/assets/images/folder-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[1,\"/\"],[13]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[15,1,[29,[\"fname-\",[30,2,[\"fname\"]]]]],[12],[10,\"img\"],[14,\"src\",\"/assets/images/file-ios.png\"],[14,5,\"width: 25px; height: auto; padding: 0px 5px 0px;\"],[12],[13],[10,3],[15,6,[29,[\"/downloadfiles?filename=\",[30,2,[\"filePath\"]]]]],[12],[10,\"strong\"],[12],[1,[30,2,[\"fname\"]]],[13],[13],[13],[1,\"\\n\"]],[]]],[1,\"            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[28,[35,10],[[30,2,[\"size\"]]],null]],[13],[1,\"\\n            \"],[10,\"td\"],[14,5,\"padding: 5px 10px 5px 10px\"],[12],[1,[30,2,[\"lmod\"]]],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[2]],null],[13],[1,\"\\n\"],[10,\"br\"],[12],[13],[1,\"\\n\\n\"],[10,\"h3\"],[12],[1,[34,2]],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13],[1,\"\\n\"],[1,\"\\n      \"],[10,0],[14,0,\"form-group\"],[12],[1,\"\\n      \"],[10,\"label\"],[14,0,\"control-label col-sm-2\"],[12],[10,\"strong\"],[12],[1,\"Select File :\"],[13],[13],[1,\"\\n      \"],[10,\"input\"],[14,1,\"file-input\"],[14,3,\"file\"],[14,\"multiple\",\"\"],[14,4,\"file\"],[12],[13],[1,\"\\n      \"],[1,[28,[35,11],null,[[\"type\",\"id\",\"value\",\"name\"],[\"hidden\",\"relpath\",[28,[30,0,[\"filepathtitle\"]],null,null],\"relpath\"]]]],[1,\"\\n      \"],[10,\"br\"],[12],[13],[1,\"\\n      \"],[11,\"button\"],[24,0,\"btn btn-primary btn-sm\"],[24,4,\"submit\"],[4,[38,12],[\"click\",[28,[37,13],[\"upload_files\"],null]],null],[12],[1,\"Upload Files\"],[13],[1,\"\\n      \"],[13],[1,\"\\n\\n\\n\"],[10,\"br\"],[12],[13],[1,\"\\n\"],[10,\"br\"],[12],[13],[1,\"\\n\\n\"],[10,0],[14,0,\"form-group\"],[12],[1,\"\\n  \"],[10,\"label\"],[14,0,\"control-label col-sm-2\"],[12],[10,\"strong\"],[12],[1,\"Folder Name :\"],[13],[13],[1,\"\\n  \"],[1,[28,[35,11],null,[[\"type\",\"id\",\"value\",\"name\",\"placeholder\",\"class\"],[\"text\",\"foldername\",[33,14],\"foldername\",\"Enter the Folder Name\",\"form-control input-sm col-sm-4\"]]]],[1,\"\\n  \"],[1,[28,[35,11],null,[[\"type\",\"id\",\"value\",\"name\"],[\"hidden\",\"relpath\",[28,[30,0,[\"filepathtitle\"]],null,null],\"relpath\"]]]],[1,\"\\n  \"],[10,\"br\"],[12],[13],[1,\"\\n  \"],[11,\"button\"],[24,0,\"btn btn-primary btn-sm\"],[24,4,\"submit\"],[4,[38,12],[\"click\",[28,[37,13],[\"create_folder\"],null]],null],[12],[1,\"Create Folder\"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"hr\"],[12],[13]],[\"@model\",\"file\"],false,[\"page-title\",\"notification-container\",\"filepathdisplay\",\"if\",\"isfilepath\",\"filepathtitle\",\"link-to\",\"goback\",\"each\",\"-track-array\",\"sizer\",\"input\",\"on\",\"route-action\",\"foldername\"]]",
     "moduleName": "ember-path/templates/files.hbs",
     "isStrictMode": false
   });

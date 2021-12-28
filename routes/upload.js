@@ -34,19 +34,28 @@ const upload = multer({ storage: storage });
 
 uploadjs.post('/', upload.any(), (req, res) => {
     var relpath = req.body.relpath;
-    // console.log(files);
-    // console.log('relpath in upload : ', relpath);
+    console.log(files);
+    console.log('relpath in upload : ', relpath);
     if (relpath != '' && relpath != undefined) {
+        if (files.length == 0) {
+            res.json({
+                'status' : 'empty'
+            })
+        }
         // console.log('files : ', files);
         files.forEach((val, ind) => {
             fsx.move(dir+'/'+val, dir+'/'+relpath+'/'+val, (error) => {
-                if(error)   console.log('error : ', error);
+                if(error) {
+                    console.log('error : ', error);
+                }
                 console.log("move success");
             });
         });
     }
     files.length = 0;
-    res.send('Files Uploaded Successfully');
+    res.json({
+        'status' : 'success'
+    })
 });
 
 
